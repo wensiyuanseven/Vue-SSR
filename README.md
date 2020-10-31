@@ -115,7 +115,8 @@ server.enter.js中
 解决方法：
 所以在服务器中还得再配其他路径，使用中间件，使得每个路径渲染对应的页面
 
-中间件 当找不到路由时会走此逻辑
+**中间件** 
+当找不到路由时会走此逻辑
 如果匹配不到路由就会走此逻辑(当路由不是跟路径时，要跳转到对应的路径,渲染对应的页面)
 如果服务器没有此路径，会渲染当前的app.vue(首页)文件,在渲染时又会重新指向/bar路径对应的页面
 然后 server.entry.js 中router.push(context.url)找对应的组件
@@ -149,7 +150,6 @@ if (typeof window !== "undefined" && window.__INITIAL_STATE__) {
 
 因为客户端和服务端各自生成一个vuex实例 而他们两个需要共用一个状态，因此需要服务端状态改变之后传给客户端
 
-为什么
 
 服务端与客户端各自的用处？
 
@@ -166,11 +166,12 @@ if (typeof window !== "undefined" && window.__INITIAL_STATE__) {
 被爬虫爬取，比如新闻列表的数据 由服务端返回
 
 
-## 使用：
+## 使用
+ -  在SSR-3目录中 npm install 安装依赖
  - 打包服务端 npm  run  server:build
  - 打包客户端  npm  run   client:build
 
- - 在dist目录index.ssr.html重引入客户端代码
+ - 在dist目录index.ssr.html中引入客户端代码
  `<script src="./client.bundle.js"></script>`
 
  - 执行服务端脚本
