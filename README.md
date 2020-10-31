@@ -1,32 +1,32 @@
 # webpack5.0+Vue+SSR+vue-router+vuex
 
 ## 一些包
-webpack相关
-webpack
-webpack-cli  命令行解析工具 4.0之前是一起的 4.0之后拆开了 需要安装
-webpack-dev-server
-html-webpack-plugin
-webpack-merge
+### webpack相关
+- webpack
+- webpack-cli  命令行解析工具 4.0之前是一起的 4.0之后拆开了 需要安装
+- webpack-dev-server
+- html-webpack-plugin
+- webpack-merge
 
-es6转es5
-babel-loader   es6=>es5 webpack中接入babel
-@babel/core    babel-loader依赖
-@babel/preset-env  加入新的语法特性 比如2015年加入的新特性  Env包括所有的新特性
-@babel/plugin-transform-runtime 减少冗余代码  默认的polifill属性已经被废除掉了
-@babel/runtime    @babel/plugin-transform-runtime依赖
+### es6转es5
+- babel-loader   es6=>es5 webpack中接入babel
+- @babel/core    babel-loader依赖
+- @babel/preset-env  加入新的语法特性 比如2015年加入的新特性  Env包括所有的新特性
+- @babel/plugin-transform-runtime 减少冗余代码  默认的polifill属性已经被废除掉了
+- @babel/runtime    @babel/plugin-transform-runtime依赖
 
-解析css的包
-vue-style-loader  支持服务端渲染 和style-loader功能一样
-css-loader
+### 解析css的包
+- vue-style-loader  支持服务端渲染 和style-loader功能一样
+- css-loader
 
-处理vue
-vue-loader 处理.vue文件
-vue-template-loader  处理模板编译
+### vue相关
+- vue-loader 处理.vue文件
+- vue-template-loader  处理模板编译
 
 
 
 ----------------------------
-npx webpack   ===  node_modules/bin/webpack  这是打包
+npx webpack   ===  node_modules/bin/webpack  打包
 
 
 
