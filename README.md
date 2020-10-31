@@ -167,18 +167,14 @@ if (typeof window !== "undefined" && window.__INITIAL_STATE__) {
 
 
 ## 使用：
+ - 打包服务端 npm  run  server:build
+ - 打包客户端  npm  run   client:build
 
- 打包服务端  npm  run   server:build
- 打包客户端  npm  run   client:build
+ - 在dist目录index.ssr.html重引入客户端代码
+ `<script src="./client.bundle.js"></script>`
 
- 在dist目录index.ssr.html重引入客户端代码
- <script src="./client.bundle.js"></script>
-
- 执行服务端脚本
+ - 执行服务端脚本
  node server.js
-
-
-
 
 
 
