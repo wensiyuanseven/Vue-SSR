@@ -1,0 +1,38 @@
+{
+  "name": "my-ssr-example",
+  "version": "1.0.0",
+  "description": "base-ssr",
+  "main": "main.js",
+  "scripts": {
+    "start": "webpack serve ",
+    "watch": "webpack --watch"
+  },
+  "author": "wensiyuan",
+  "license": "ISC",
+  "dependencies": {
+    "@babel/runtime": "^7.12.1",
+    "koa": "^2.13.0",
+    "koa-router": "^9.4.0",
+    "koa-static": "^5.0.0",
+    "vue": "^2.6.12",
+    "vue-router": "^3.4.7",
+    "vue-server-renderer": "^2.6.12",
+    "vuex": "^3.5.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.12.3",
+    "@babel/plugin-transform-runtime": "^7.12.1",
+    "@babel/preset-env": "^7.12.1",
+    "babel-loader": "^8.1.0",
+    "css-loader": "^5.0.0",
+    "html-webpack-plugin": "^4.5.0",
+    "vue-loader": "^15.9.3",
+    "vue-style-loader": "^4.1.2",
+    "vue-template-compiler": "^2.6.12",
+    "vue-template-loader": "^1.1.0",
+    "webpack": "^5.2.0",
+    "webpack-cli": "^4.1.0",
+    "webpack-dev-server": "^3.11.0",
+    "webpack-merge": "^5.2.0"
+  }
+}
