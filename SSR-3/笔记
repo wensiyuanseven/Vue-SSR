@@ -131,6 +131,7 @@ export default context => {
 如果匹配不到路由就会走此逻辑(当路由不是跟路径时，要跳转到对应的路径,渲染对应的页面)
 如果服务器没有此路径，会渲染当前的app.vue(首页)文件,在渲染时又会重新指向/bar路径对应的页面
 然后 server.entry.js 中router.push(context.url)找对应的组件
+
  ```js
     app.use(async ctx => {
     ctx.body = await new Promise((resolve, reject) => {
