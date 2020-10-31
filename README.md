@@ -1,4 +1,4 @@
-# webpack5.0+Vue+SSR 排坑
+# webpack5.0尝鲜 SSR+vue-router+vuex【排坑记录】
 ![](https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/0eb6c4b857fe413bb2038e6601722155~tplv-k3u1fbpfcp-watermark.image)
 ## 一些包
 ### webpack相关
@@ -76,8 +76,10 @@ const ServerRenderPlugin = require("vue-server-renderer/server-plugin");
 npm run client:build -- --watch 文件变动执行打包编译
 
 为什么服务端vue vuex vueRouter 都需要调用一个函数，从函数中获取实例？
+
 因为Node.js 服务器是一个长期运行的进程 当代码进入进程时，它将进行一次取值并留存在内存中。也就是会把vue实例保存到内存中
 假如说不用函数返回新的实例，那么每个人访问同一个页面时都会共用同一个实例，那么就会造成数据的污染。
+
 https://ssr.vuejs.org/zh/guide/structure.html
 
 
@@ -95,17 +97,21 @@ https://ssr.vuejs.org/zh/guide/structure.html
 服务器访问根目录时 router.get("/") 渲染出来的时字符串 它并不知道哪个页面对应哪个路由 所以只会渲染app.vue
 
 解决方案:
+
 server.js中
-  render.renderToString({url:'/' })
+  `render.renderToString({url:'/' })`
 
 server.enter.js中
-    export default context => {
-        // 服务端需要调用当前这个文件 去产生一个vue实例
-        const { app, router } = createApp();
-        // context.url  服务端要把对应的路由和此url相匹配
-        router.push(context.url); // 渲染当前页面对应的路由
-        return app; //拿这个实例去服务端查找渲染结果
-    };
+
+```js
+export default context => {
+    // 服务端需要调用当前这个文件 去产生一个vue实例
+    const { app, router } = createApp();
+    // context.url  服务端要把对应的路由和此url相匹配
+    router.push(context.url); // 渲染当前页面对应的路由
+    return app; //拿这个实例去服务端查找渲染结果
+};
+```
 
 切换到其他路由localhose:3000/bar然后刷新浏览器会报404错误  Not Fount
 
@@ -140,7 +146,7 @@ server.enter.js中
 
 这也是history模式需要后端支持的原理
 
-## vuex集成
+## Vuex集成
 
 为什么vuex需要此判断？
 
@@ -163,6 +169,7 @@ if (typeof window !== "undefined" && window.__INITIAL_STATE__) {
     只写setTimeout 不生效 因为setTimeout是异步的，在vuex实例渲染完成后才被调用,此时页面已经被当成字符串渲染到浏览器上了。
 
 哪些请求放在ajax哪些放在服务端请求？
+
 被爬虫爬取，比如新闻列表的数据 由服务端返回
 
 
@@ -171,11 +178,13 @@ if (typeof window !== "undefined" && window.__INITIAL_STATE__) {
  - 打包服务端 npm  run  server:build
  - 打包客户端  npm  run   client:build
 
- - 在dist目录index.ssr.html中引入客户端代码
- `<script src="./client.bundle.js"></script>`
+ - 在dist目录index.ssr.html中引入客户端代码`<script src="./client.bundle.js"></script>`
 
- - 执行服务端脚本
- node server.js
+ - 执行服务端脚本 `node server.js`
+
+ ## 项目地址
+
+  https://github.com/wensiyuanseven/Vue-SSR
 
 
 
