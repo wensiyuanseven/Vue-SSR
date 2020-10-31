@@ -1,5 +1,5 @@
-# webpack5.0+Vue+SSR+vue-router+vuex
-
+# webpack5.0+Vue+SSR 排坑
+![](https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/0eb6c4b857fe413bb2038e6601722155~tplv-k3u1fbpfcp-watermark.image)
 ## 一些包
 ### webpack相关
 - webpack
@@ -115,7 +115,7 @@ server.enter.js中
 解决方法：
 所以在服务器中还得再配其他路径，使用中间件，使得每个路径渲染对应的页面
 
-**中间件** 
+**中间件**
 当找不到路由时会走此逻辑
 如果匹配不到路由就会走此逻辑(当路由不是跟路径时，要跳转到对应的路径,渲染对应的页面)
 如果服务器没有此路径，会渲染当前的app.vue(首页)文件,在渲染时又会重新指向/bar路径对应的页面
