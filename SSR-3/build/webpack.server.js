@@ -9,7 +9,7 @@ module.exports = Merge.merge(base, {
   },
   target: "node", //打包后的结果给node来使用 node中会使用const path=require('path') 如果不指定为node环境 打包后的结果会包含path模块
   output: {
-    libraryTarget: "commonjs2" //打包后的结果给node来使用 把最终执行的结果放到module.exports上
+    libraryTarget: "commonjs2" // 打包后的结果给node来使用 把最终执行的结果放到module.exports上
     /**  node执行原理
     (function(){
      //自己的代码

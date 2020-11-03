@@ -6,7 +6,6 @@ import createStore from "./store";
 export default () => {
   const router = createRouter(); //创建新的router实例
   const store = createStore();
-  console.log(store,'store')
   const app = new Vue({
     router,
     store,

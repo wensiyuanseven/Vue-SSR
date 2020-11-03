@@ -94,6 +94,7 @@ https://ssr.vuejs.org/zh/guide/structure.html
 
 
 此时的问题
+
 此时在服务器中执行构建,
 访问localhose:3000/    应该渲染出对应的组件Foo 但是没有渲染出来
 并且控制台会报错 Failed to execute 'appendChild' on 'Node': This node type does not support this method.at Object.appendChild
@@ -128,11 +129,10 @@ export default context => {
 
 **中间件**
 当找不到路由时会走此逻辑
-如果匹配不到路由就会走此逻辑(当路由不是跟路径时，要跳转到对应的路径,渲染对应的页面)
+如果匹配不到路由就会走此逻辑(当路由不是根路径时，要跳转到对应的路径,渲染对应的页面)
 如果服务器没有此路径，会渲染当前的app.vue(首页)文件,在渲染时又会重新指向/bar路径对应的页面
 然后 server.entry.js 中router.push(context.url)找对应的组件
 
- ```js
     app.use(async ctx => {
     ctx.body = await new Promise((resolve, reject) => {
         // 必须写成回调函数的形式否则css样式不生效
@@ -148,21 +148,19 @@ export default context => {
         );
     });
     });
- ```
 
 也就是先渲染app.vue---->找其他路由对应的组件
-
+ 如果是单页面 koa中间件会去监听生成的bundle.js文件(中间件回去监听dist目录下的所有文件)
 这也是history模式需要后端支持的原理
 
 ## Vuex集成
 
 Vuex中为什么需要此判断？
 
-```js
 if (typeof window !== "undefined" && window.__INITIAL_STATE__) {
     store.replaceState(window.__INITIAL_STATE__);
 }
-```
+
 
 因为客户端和服务端各自生成一个vuex实例 而他们两个需要共用一个状态，因此需要服务端状态改变之后传给客户端
 
@@ -195,6 +193,55 @@ if (typeof window !== "undefined" && window.__INITIAL_STATE__) {
  ## 项目地址
 
   https://github.com/wensiyuanseven/Vue-SSR
+
+
+
+流程大致总结
+
+主入口文件 - 服务端入口文件
+         - 客户端入口文件
+webpack  - base.js
+         - 服务端配置
+         - 客户端配置
+         - merge-webpack
+vue-server-renderer  两个方法 createRender() createBundleRender()
+                     renderTostring()  renderToStream()
+
+流程
+webpack.server.js -> 入口文件 server.entry.js(函数生成每个实例)-> npm run server:build->服务端文件打包到dist目录
+
+webpack.client.js->入口文件 server.entry.js ->npm run client:build->客户端打包到dist目录
+
+Koa-> vue-server-renderer->render.createBundleRender()引入打包好的服务端文件和模板->render.renderToStream()配置模板属性+生成html字符串
+->koa中间件监听dist目录->在模板中手动引入客户端打包好的bundle.js文件->挂载#app激活事件->返回给客户端。
+
+css->vue-style-loader
+
+配置meta标签->在option中设置title
+客户端:document.title=this.$options.title
+服务端：this.$ssrContext=title
+
+配置路由
+
+引入路由->每个路由都已函数的形式返回->koa中间件捕获到history路径->把url传给render.renderToString->server.entry.js接受到路径
+router.push(context.url)渲染当前页面对应的路由
+
+ router.onReady()  router.getMatchedComponents()
+
+
+配置vuex
+
+引入vuex->每个路由都已函数的形式返回->在匹配到的每个组件中调用asyncData方法动态传入store->
+改变store的状态->更新(此时会等待promise执行完成再渲染页面)->
+再拿到状态->context.state = store.state->把vuex的状态挂载到上下文中，会将状态挂载到window上->
+当客户端执行vuex时把状态替换掉  store.replaceState(window.__INITIAL_STATE__);
+
+
+
+
+
+
+
 
 
 

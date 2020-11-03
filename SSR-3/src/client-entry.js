@@ -8,4 +8,5 @@ if (typeof window !== "undefined" && window.__INITIAL_STATE__) {
   // 浏览器中的状态就会变成服务器最新的状态(因为客户端也注入了store 目的就是让页面能取到值this.$store.state)
   store.replaceState(window.__INITIAL_STATE__);
 }
+
 app.$mount("#app");

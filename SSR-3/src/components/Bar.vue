@@ -18,7 +18,8 @@ export default {
   asyncData(store) {
     // nuxt.js中也有此方法。此方法只在服务端执行，并且只在页面组件中执行
     // （页面级别组件指通过路由生成的组件，路由组件中的子组件不执行此方法）
-    return store.dispatch('changeName')
+    // 此时无法获取this
+    return store.dispatch('changeName') //返回promise
   },
   // 客户端代码调用state
   mounted() {

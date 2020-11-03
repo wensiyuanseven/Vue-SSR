@@ -29,6 +29,7 @@ export default context => {
         match.map(component => {
           // 只是在服务端渲染好之后返回出去的
           if (component.asyncData) {
+            // 如果服务端没有asyncData更改状态 是不需要等待的
             //asyncData是在服务端调用的。如果当前的路由组件有asyncData函数 就执行此函数。
             return component.asyncData(store);
           }
@@ -38,6 +39,11 @@ export default context => {
         // 服务器执行完成之后把状态改变了 会在window上生成一个变量 <script>window.__INITIAL_STATE__={"name":"温远思"}</script>
         // __INITIAL_STATE__是固定的名字
         context.state = store.state; //名字必须为state(规定) 把vuex的状态挂载到上下文中，会将状态挂载到window上
+        // {
+        //   title: "服务",
+        //   url: ctx.url，
+        // context:store.state
+        // },
         resolve(app);
       });
     }, reject);

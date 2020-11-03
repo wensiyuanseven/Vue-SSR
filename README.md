@@ -1,3 +1,13 @@
+
+## 使用
+ -  在SSR-3目录中 npm install 安装依赖
+ - 打包服务端 npm  run  server:build
+ - 打包客户端  npm  run   client:build
+
+ - 在dist目录index.ssr.html中引入客户端代码`<script src="./client.bundle.js"></script>`
+
+ - 执行服务端脚本 `node server.js`
+ 
 # webpack5.0尝鲜 SSR+vue-router+vuex【排坑记录】
 ![](https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/0eb6c4b857fe413bb2038e6601722155~tplv-k3u1fbpfcp-watermark.image)
 ## 一些包
@@ -173,18 +183,58 @@ if (typeof window !== "undefined" && window.__INITIAL_STATE__) {
 被爬虫爬取，比如新闻列表的数据 由服务端返回
 
 
-## 使用
- -  在SSR-3目录中 npm install 安装依赖
- - 打包服务端 npm  run  server:build
- - 打包客户端  npm  run   client:build
 
- - 在dist目录index.ssr.html中引入客户端代码`<script src="./client.bundle.js"></script>`
 
- - 执行服务端脚本 `node server.js`
+## 流程大致总结
 
- ## 项目地址
+主入口文件 - 服务端入口文件
+         - 客户端入口文件
+webpack  - base.js
+         - 服务端配置
+         - 客户端配置
+         - merge-webpack
+vue-server-renderer  两个方法 createRender() createBundleRender()
+                     renderTostring()  renderToStream()
 
-  https://github.com/wensiyuanseven/Vue-SSR
+### 流程
+webpack.server.js -> 入口文件 server.entry.js(函数生成每个实例)-> npm run server:build->服务端文件打包到dist目录
+
+webpack.client.js->入口文件 server.entry.js ->npm run client:build->客户端打包到dist目录
+
+Koa-> vue-server-renderer->render.createBundleRender()引入打包好的服务端文件和模板->render.renderToStream()配置模板属性+生成html字符串
+->koa中间件监听dist目录->在模板中手动引入客户端打包好的bundle.js文件->挂载#app激活事件->返回给客户端。
+
+css->vue-style-loader
+
+配置meta标签->在option中设置title
+客户端:document.title=this.$options.title
+服务端：this.$ssrContext=title
+
+### 配置路由
+
+引入路由->每个路由都已函数的形式返回->koa中间件捕获到history路径->把url传给render.renderToString->server.entry.js接受到路径
+router.push(context.url)渲染当前页面对应的路由
+
+ router.onReady()  router.getMatchedComponents()
+
+
+### 配置vuex
+
+引入vuex->每个路由都已函数的形式返回->在匹配到的每个组件中调用asyncData方法动态传入store->
+改变store的状态->更新(此时会等待promise执行完成再渲染页面)->
+再拿到状态->context.state = store.state->把vuex的状态挂载到上下文中，会将状态挂载到window上->
+当客户端执行vuex时把状态替换掉  store.replaceState(window.__INITIAL_STATE__);
+
+
+
+
+
+
+
+
+
+
+
 
 
 
