@@ -1,3 +1,5 @@
 .DS_Store
+.vscode
+/单页面配置/node_modules
 /SSR-2-ERR/node_modules/
 /SSR-3/node_modules/
