@@ -7,7 +7,7 @@
  - 在dist目录index.ssr.html中引入客户端代码`<script src="./client.bundle.js"></script>`
 
  - 执行服务端脚本 `node server.js`
- 
+
 # webpack5.0尝鲜 SSR+vue-router+vuex【排坑记录】
 ![](https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/0eb6c4b857fe413bb2038e6601722155~tplv-k3u1fbpfcp-watermark.image)
 ## 一些包
@@ -196,7 +196,7 @@ webpack  - base.js
 vue-server-renderer  两个方法 createRender() createBundleRender()
                      renderTostring()  renderToStream()
 
-### 流程
+### 主流程
 webpack.server.js -> 入口文件 server.entry.js(函数生成每个实例)-> npm run server:build->服务端文件打包到dist目录
 
 webpack.client.js->入口文件 server.entry.js ->npm run client:build->客户端打包到dist目录
