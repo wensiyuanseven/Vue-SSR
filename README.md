@@ -9,7 +9,7 @@
 
 - 执行服务端脚本 `node server.js`
 
-# webpack5.0尝鲜 SSR+vue+Koa+vue-router+vuex【排坑记录】
+# webpack5.0尝鲜 SSR+Vue+Koa+vue-router+vuex【排坑记录】
 
 ![](https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/0eb6c4b857fe413bb2038e6601722155~tplv-k3u1fbpfcp-watermark.image)
 
